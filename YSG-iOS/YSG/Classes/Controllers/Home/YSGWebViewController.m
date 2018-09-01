@@ -87,6 +87,7 @@ JSExportAs(request,
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     self.isLoading = false;
     [self dismissMessage];
+    [self startLoginRequest];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
@@ -213,6 +214,11 @@ JSExportAs(request,
 - (void)setLocationLat:(NSString *)lat Ing:(NSString *)ing{
     NSString *jsStr = [NSString stringWithFormat:@"setLocationLat('%@','%@')",lat,ing];
     [self.context evaluateScript:jsStr];
+}
+
+- (void)startLoginRequest
+{
+    [self.context evaluateScript:@"startLogin()"];
 }
 
 - (void)didReceiveMemoryWarning {

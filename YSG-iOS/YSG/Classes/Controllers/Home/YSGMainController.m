@@ -162,6 +162,7 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     self.isLoading = false;
     [self dismissMessage];
+    [self startLoginRequest];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
@@ -312,6 +313,15 @@
             NSLog(@"错误:%@", error.localizedDescription);
         }
     }];
+}
+
+- (void)startLoginRequest
+{
+    [self.webView evaluateJavaScript:@"startLogin()" completionHandler:^(id _Nullable data, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"错误:%@", error.localizedDescription);
+        }
+    }];;
 }
 
 - (void)didReceiveMemoryWarning {

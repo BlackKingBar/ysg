@@ -26,7 +26,7 @@
 }
 - (void)setupView{
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) configuration:configuration];
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 85, kScreenWidth, kScreenHeight-STATUS_BAR_HEIGHT-85) configuration:configuration];
     [self.view addSubview:webView];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapWebViwe)];
     webView.userInteractionEnabled = YES;

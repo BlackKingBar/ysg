@@ -37,10 +37,16 @@
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
+// 屏幕适配
+// 判断是否是iPhone X
+#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+// 状态栏高度
+#define STATUS_BAR_HEIGHT (iPhoneX ? 44.f : 20.f)
+
 #define KSecretKey             @"CtUyV$8MGoK8u5L*P0Q50T/b8S9iclS*LQqo" 
 //#define kApiHomeURL           @"http://47.52.220.96"
 //#define kApiHomeURL           @"http://118.190.164.26:8080/"
-#define kApiHomeURL           @"http://webview.easyiservice.com:8080/"
+#define kApiHomeURL           @"http://webview.easyiservice.com:8080/"//生产:http://webview.easyiservice.com:8080/ 测试:http://47.52.220.96/
 #define kApiDomainURL         @"https://service.easyiservice.com/"
 
 #endif /* XZConstans_h */

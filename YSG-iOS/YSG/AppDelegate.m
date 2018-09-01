@@ -199,7 +199,7 @@
 }
 
 - (void)setPushOptions:(NSDictionary *)launchOptions{
-    [UMessage startWithAppkey:@"5948e79df43e48682f000049" launchOptions:launchOptions httpsEnable:YES];
+    [UMessage startWithAppkey:@"5948e79df43e48682f000049" launchOptions:launchOptions httpsEnable:YES];//生产:5948e79df43e48682f000049 测试:5b3b2dbc8f4a9d790d000140
     //注册通知，如果要使用category的自定义策略，可以参考demo中的代码。
     [UMessage registerForRemoteNotifications];
     
@@ -265,7 +265,11 @@
     //必须加这句代码
     [UMessage didReceiveRemoteNotification:userInfo];
     YSGADController *vc = [self.storyB instantiateViewControllerWithIdentifier:@"YSGADController"];
-    vc.vcTitle = userInfo[@"aps"][@"alert"];
+    if ([userInfo[@"aps"][@"alert"] isKindOfClass:[NSDictionary class]]) {
+        vc.vcTitle = userInfo[@"aps"][@"alert"][@"title"];
+    } else {
+        vc.vcTitle = userInfo[@"aps"][@"alert"];
+    }
     vc.url = [NSString stringWithFormat:@"%@",userInfo[@"value"]];
     UINavigationController *nav =  (UINavigationController *)self.window.rootViewController;
     [nav pushViewController:vc animated:YES];
@@ -282,7 +286,11 @@
     UIAlertAction *done = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         YSGADController *vc = [self.storyB instantiateViewControllerWithIdentifier:@"YSGADController"];
         vc.url = [NSString stringWithFormat:@"%@",userInfo[@"value"]];
-        vc.vcTitle = userInfo[@"aps"][@"alert"];
+        if ([userInfo[@"aps"][@"alert"] isKindOfClass:[NSDictionary class]]) {
+            vc.vcTitle = userInfo[@"aps"][@"alert"][@"title"];
+        } else {
+            vc.vcTitle = userInfo[@"aps"][@"alert"];
+        }
         UINavigationController *nav =  (UINavigationController *)self.window.rootViewController;
         [nav pushViewController:vc animated:YES];
     }];
@@ -305,12 +313,21 @@
         UIAlertAction *done = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             YSGADController *vc = [self.storyB instantiateViewControllerWithIdentifier:@"YSGADController"];
             vc.url = [NSString stringWithFormat:@"%@",userInfo[@"value"]];
-            vc.vcTitle = userInfo[@"aps"][@"alert"];
+            if ([userInfo[@"aps"][@"alert"] isKindOfClass:[NSDictionary class]]) {
+                vc.vcTitle = userInfo[@"aps"][@"alert"][@"title"];
+            } else {
+                vc.vcTitle = userInfo[@"aps"][@"alert"];
+            }
             UINavigationController *nav =  (UINavigationController *)self.window.rootViewController;
             [nav pushViewController:vc animated:YES];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleCancel handler:nil];
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:userInfo[@"aps"][@"alert"] message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertVC ;
+        if ([userInfo[@"aps"][@"alert"] isKindOfClass:[NSDictionary class]]) {
+            alertVC= [UIAlertController alertControllerWithTitle:userInfo[@"aps"][@"alert"][@"title"] message:userInfo[@"aps"][@"alert"][@"body"] preferredStyle:UIAlertControllerStyleAlert];
+        } else {
+            alertVC= [UIAlertController alertControllerWithTitle:userInfo[@"aps"][@"alert"] message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        }
         [alertVC addAction:done];
         [alertVC addAction:cancel];
         [self.window.rootViewController presentViewController:alertVC animated:YES completion:nil];
@@ -332,7 +349,11 @@
         //必须加这句代码
         [UMessage didReceiveRemoteNotification:userInfo];
         YSGADController *vc = [self.storyB instantiateViewControllerWithIdentifier:@"YSGADController"];
-        vc.vcTitle = userInfo[@"aps"][@"alert"];
+        if ([userInfo[@"aps"][@"alert"] isKindOfClass:[NSDictionary class]]) {
+            vc.vcTitle = userInfo[@"aps"][@"alert"][@"title"];
+        } else {
+            vc.vcTitle = userInfo[@"aps"][@"alert"];
+        }
         vc.url = [NSString stringWithFormat:@"%@",userInfo[@"value"]];
         UINavigationController *nav =  (UINavigationController *)self.window.rootViewController;
         [nav pushViewController:vc animated:YES];
